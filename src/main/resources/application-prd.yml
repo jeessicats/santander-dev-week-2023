@@ -1,9 +1,14 @@
 spring:
   datasource:
+    # Define a URL de conexão com o banco de dados PostgreSQL usando variáveis de ambiente
     url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    # Define o nome de usuário para a conexão com o banco de dados usando uma variável de ambiente
     username: ${PGUSER}
+    # Define a senha para a conexão com o banco de dados usando uma variável de ambiente
     password: ${PGPASSWORD}
   jpa:
+    # Desativa o carregamento do contexto Hibernate em uma transação aberta
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      # Define a estratégia de gerenciamento do esquema do banco de dados
+      ddl-auto: validate # Outras opções: none | update | create | create-drop

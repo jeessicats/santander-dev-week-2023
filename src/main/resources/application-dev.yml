@@ -1,20 +1,32 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:sdw2023
-    username: sdw2023
-    password:
+    # Define a URL de conexão com o banco de dados PostgreSQL usando variáveis de ambiente
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    # Define o nome de usuário para a conexão com o banco de dados usando uma variável de ambiente
+    username: ${PGUSER}
+    # Define a senha para a conexão com o banco de dados usando uma variável de ambiente
+    password: ${PGPASSWORD}
   jpa:
-    show-sql: true
+    # Desativa o carregamento do contexto Hibernate em uma transação aberta para evitar problemas de performance
     open-in-view: false
     hibernate:
-      ddl-auto: create # validate | update | create | create-drop
+      # Define a estratégia de gerenciamento do esquema do banco de dados
+      # Use 'validate' para produção para garantir que o esquema esteja sincronizado sem alterações
+      # Use 'update' para desenvolvimento para aplicar mudanças automaticamente
+      ddl-auto: validate
     properties:
       hibernate:
-        format_sql: true
+        # Desativa o formato SQL para evitar logs detalhados em produção
+        # Ative 'format_sql: true' apenas em ambientes de desenvolvimento
+        format_sql: false
   h2:
     console:
-      enabled: true
+      # Habilita o console web do H2 em ambientes de desenvolvimento
+      enabled: false # Defina como 'false' em produção por razões de segurança
+      # Define o caminho de acesso ao console do H2
       path: /h2-console
       settings:
+        # Desativa o rastreamento de consultas no console para melhorar a performance
         trace: false
+        # Impede o acesso externo ao console H2 para melhorar a segurança
         web-allow-others: false
